@@ -6,9 +6,7 @@ how to answer each question — from conversation history, a curated RAG corpus,
 search, or structured biomedical databases (via MCP tools) — then synthesises a grounded,
 citation-backed final answer.
 
-> **Case study:** Complex Lymphatic Anomalies (CLA), including Gorham-Stout Disease (GSD),
-> Generalized Lymphatic Anomaly (GLA), Kaposiform Lymphangiomatosis (KLA),
-> Central Conducting Lymphatic Anomaly (CCLA), and Lymphangioleiomyomatosis (LAM).
+> **Case study:** Complex Lymphatic Anomalies (CLAs) are rare diseases caused by the maldevelopment of lymphatic vessels. CLAs include Gorham-Stout Disease (GSD), Generalized Lymphatic Anomaly (GLA), Kaposiform Lymphangiomatosis (KLA),and Central Conducting Lymphatic Anomaly (CCLA).
 
 ---
 
