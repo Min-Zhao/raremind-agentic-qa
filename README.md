@@ -17,41 +17,7 @@ citation-backed final answer.
 
 ### Routing Decision Tree
 
-```
-                    ┌─────────────┐
-                    │ New Query   │
-                    └──────┬──────┘
-                           │
-                    ┌──────▼──────┐
-                    │  Emergency  │──YES──► Emergency Response (911)
-                    │  keywords?  │
-                    └──────┬──────┘
-                           │ NO
-                    ┌──────▼──────────────┐
-                    │  Query Analyzer LLM │
-                    │  (classify intent)  │
-                    └──────┬──────────────┘
-                           │
-          ┌────────────────┼──────────────────────┐
-          │                │                      │
-          ▼                ▼                      ▼
-   Confidence OK?    Confidence Low?        Ambiguous?
-          │                │                      │
-          │                ▼                      ▼
-          │          Re-query loop          Re-query loop
-          │          (max 2x)               (max 2x)
-          │
-   ┌──────┴──────────────────────────────────┐
-   │                                         │
-   ▼         ▼          ▼          ▼         ▼
-history     rag        web        mcp      hybrid
-   │         │          │          │       (web+rag)
-   └─────────┴──────────┴──────────┴─────────┘
-                         │
-                  ┌──────▼──────┐
-                  │AnswerAgent  │
-                  └─────────────┘
-```
+![Workflow](figures/query_routing.png)
 
 ---
 
