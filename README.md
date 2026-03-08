@@ -13,7 +13,7 @@ citation-backed final answer.
 ## Architecture
 
 ```
-<img width="1407" height="768" alt="system_review" src="https://github.com/user-attachments/assets/1c6ae3a7-c508-4dfd-90a7-4a6a30d6109c" />
+![System Overview](figures/system_overview.png)
 ```
 
 ### Routing Decision Tree
