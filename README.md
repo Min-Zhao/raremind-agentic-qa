@@ -316,7 +316,7 @@ This system follows these safety principles:
   title  = {RareMind: Agentic Rare Disease QA Pipeline},
   year   = {2025},
   note   = {GitHub repository},
-  url    = {https://github.com/your-org/agentic_framework}
+  url    = {https://github.com/Min-Zhao/agentic_framework}
 }
 ```
 
