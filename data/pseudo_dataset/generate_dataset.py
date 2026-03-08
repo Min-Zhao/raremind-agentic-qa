@@ -1,0 +1,249 @@
+"""
+generate_dataset.py – generates a pseudo rare-disease document corpus and
+evaluation question set for pipeline development and testing.
+
+Usage:
+    python data/pseudo_dataset/generate_dataset.py
+"""
+
+from __future__ import annotations
+
+import json
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent.parent))
+
+RARE_DISEASE_DOCUMENTS = [
+    {
+        "id": "doc_001",
+        "source": "NORD_CLA_Overview",
+        "disease": "Complex Lymphatic Anomalies",
+        "doc_type": "overview",
+        "content": (
+            "Complex Lymphatic Anomalies (CLA) are a spectrum of rare disorders characterised by "
+            "abnormal development of the lymphatic system. They include Gorham-Stout Disease (GSD), "
+            "Generalized Lymphatic Anomaly (GLA), Central Conducting Lymphatic Anomaly (CCLA), "
+            "Kaposiform Lymphangiomatosis (KLA), and Lymphangioleiomyomatosis (LAM). "
+            "These conditions affect fewer than 200,000 people in the United States. "
+            "Symptoms vary widely but may include lymphedema, chylous effusions, bone lesions, "
+            "and multiorgan involvement. Diagnosis often requires imaging (MRI lymphangiography, "
+            "dynamic contrast-enhanced MRI) combined with tissue biopsy and pathology."
+        ),
+    },
+    {
+        "id": "doc_002",
+        "source": "ClinicalReview_GSD_2023",
+        "disease": "Gorham-Stout Disease",
+        "doc_type": "clinical_review",
+        "content": (
+            "Gorham-Stout Disease (GSD), also called vanishing bone disease or disappearing bone "
+            "disease, is an extremely rare disorder characterised by progressive osteolysis and "
+            "replacement of bone with fibrous or lymphatic tissue. It most commonly affects the "
+            "skull, shoulder, ribs, and spine. Chylothorax (accumulation of chylous fluid in the "
+            "chest cavity) is a serious complication associated with thoracic involvement. "
+            "Treatment options include bisphosphonates (e.g., zoledronic acid), sirolimus (an mTOR "
+            "inhibitor), propranolol, radiation therapy, and surgical stabilisation. "
+            "Sirolimus has shown promising results in case series and small clinical trials."
+        ),
+    },
+    {
+        "id": "doc_003",
+        "source": "PathophysiologyReview_KLA",
+        "disease": "Kaposiform Lymphangiomatosis",
+        "doc_type": "pathophysiology",
+        "content": (
+            "Kaposiform Lymphangiomatosis (KLA) is a rare, aggressive multisystem lymphatic anomaly "
+            "involving abnormal proliferation of spindled lymphatic endothelial cells. KLA typically "
+            "presents in childhood with mediastinal involvement, pleural and pericardial effusions, "
+            "coagulopathy (similar to Kasabach-Merritt phenomenon), and multiorgan infiltration. "
+            "Key biomarkers include elevated D-dimer and fibrinogen consumption. "
+            "Sirolimus (rapamycin), an mTOR pathway inhibitor, is the most widely used targeted "
+            "therapy. It has been shown to reduce lesion size and control effusions in multiple "
+            "case series. Vinblastine-based chemotherapy has also been used in refractory cases."
+        ),
+    },
+    {
+        "id": "doc_004",
+        "source": "PatientGuide_GLA",
+        "disease": "Generalized Lymphatic Anomaly",
+        "doc_type": "patient_education",
+        "content": (
+            "Generalized Lymphatic Anomaly (GLA) is a rare condition where abnormal lymphatic "
+            "channels and cysts develop throughout multiple areas of the body, including bones, "
+            "soft tissues, and internal organs. Unlike focal lymphatic malformations, GLA involves "
+            "multiple sites simultaneously. Patients may experience pain, pathologic fractures, "
+            "recurrent infections, and respiratory complications. "
+            "Current management includes mTOR inhibitor therapy (sirolimus/everolimus), "
+            "sclerotherapy for accessible lesions, and supportive care including compression "
+            "garments for lymphedema. Regular follow-up with MRI imaging is recommended. "
+            "Patient support resources: Lymphatic Education & Research Network (LE&RN), "
+            "CLA Support Group at www.clapatients.org."
+        ),
+    },
+    {
+        "id": "doc_005",
+        "source": "ClinicalTrial_Sirolimus_CLA_2024",
+        "disease": "Complex Lymphatic Anomalies",
+        "doc_type": "clinical_trial",
+        "content": (
+            "A phase II, open-label, multicentre clinical trial (NCT04114110) is evaluating the "
+            "efficacy and safety of sirolimus (rapamycin) in patients with complex lymphatic "
+            "anomalies including GSD, GLA, and KLA. Primary endpoint: reduction in lesion volume "
+            "by MRI at 24 weeks. Secondary endpoints include quality of life (PedsQL), "
+            "reduction in effusion volume, and coagulation parameters. "
+            "Eligibility: patients aged 2-60 years with confirmed CLA diagnosis. "
+            "Enrolment status: actively recruiting at Children's Hospital of Philadelphia, "
+            "Boston Children's Hospital, and Cincinnati Children's Hospital. "
+            "Contact: clinicltrials@example-hospital.org"
+        ),
+    },
+    {
+        "id": "doc_006",
+        "source": "DiagnosticGuidelines_CCLA",
+        "disease": "Central Conducting Lymphatic Anomaly",
+        "doc_type": "guidelines",
+        "content": (
+            "Central Conducting Lymphatic Anomaly (CCLA) refers to dysfunction of the central "
+            "lymphatic conducting vessels, including the thoracic duct and cisterna chyli. "
+            "It can cause protein-losing enteropathy (PLE), chylous ascites, and severe lymphedema. "
+            "Diagnosis requires dynamic contrast-enhanced MR lymphangiography (DCMRL) to visualise "
+            "lymphatic flow patterns and identify the anatomic site of lymphatic leak. "
+            "Interventional radiology procedures, including thoracic duct embolisation and "
+            "lymphovenous anastomosis, are increasingly used for treatment. "
+            "mTOR inhibitors may reduce lymphatic flow and improve symptoms in select patients."
+        ),
+    },
+    {
+        "id": "doc_007",
+        "source": "PatientFAQ_Sirolimus",
+        "disease": "Complex Lymphatic Anomalies",
+        "doc_type": "patient_faq",
+        "content": (
+            "Q: What is sirolimus and how does it work for CLA? "
+            "A: Sirolimus (also called rapamycin, brand name Rapamune) is an immunosuppressive "
+            "drug that inhibits the mTOR (mechanistic target of rapamycin) signalling pathway. "
+            "In CLA, mTOR pathway overactivation contributes to abnormal lymphatic growth. "
+            "By blocking mTOR, sirolimus slows the growth of abnormal lymphatic tissue and "
+            "reduces fluid accumulation. It is taken orally, usually once or twice daily, "
+            "with doses adjusted based on blood levels. Common side effects include mouth sores, "
+            "increased infection risk, elevated cholesterol, and impaired wound healing. "
+            "Regular blood monitoring is required."
+        ),
+    },
+    {
+        "id": "doc_008",
+        "source": "SupportResources_RareDisease",
+        "disease": "Complex Lymphatic Anomalies",
+        "doc_type": "support_resources",
+        "content": (
+            "Key support organisations for rare lymphatic disease patients and families:\n"
+            "• NORD (National Organization for Rare Disorders): rarediseases.org\n"
+            "• Lymphatic Education & Research Network (LE&RN): lymphaticnetwork.org\n"
+            "• CLA Support Group: clapatients.org\n"
+            "• NIH Genetic and Rare Diseases Information Center (GARD): rarediseases.info.nih.gov\n"
+            "• Orphanet (European rare disease database): orpha.net\n"
+            "• ClinicalTrials.gov: search for 'lymphatic anomaly' to find open studies.\n"
+            "Patient advocacy groups can help with insurance appeals, connecting to specialists, "
+            "and accessing compassionate use / expanded access programmes for experimental therapies."
+        ),
+    },
+    {
+        "id": "doc_009",
+        "source": "LAM_FoundationGuide",
+        "disease": "Lymphangioleiomyomatosis",
+        "doc_type": "patient_education",
+        "content": (
+            "Lymphangioleiomyomatosis (LAM) is a rare, progressive lung disease affecting almost "
+            "exclusively women of childbearing age. It is caused by mutations in the TSC1 or TSC2 "
+            "genes, leading to abnormal smooth muscle-like cell proliferation in the lungs, kidneys "
+            "(angiomyolipomas), and lymphatics. Symptoms include shortness of breath, spontaneous "
+            "pneumothorax (collapsed lung), and chylous pleural effusions. "
+            "Sirolimus (everolimus in TSC-associated LAM) is FDA-approved for LAM treatment and "
+            "has been shown to stabilise lung function and reduce angiomyolipoma size. "
+            "The LAM Foundation (thelamfoundation.org) provides patient education and connects "
+            "patients to specialised LAM Clinics across the US and internationally."
+        ),
+    },
+    {
+        "id": "doc_010",
+        "source": "GeneticCounseling_CLA",
+        "disease": "Complex Lymphatic Anomalies",
+        "doc_type": "genetics",
+        "content": (
+            "Most forms of CLA (GSD, GLA, KLA) are sporadic (not inherited) and result from "
+            "somatic (post-conception) mutations in genes regulating lymphatic endothelial cell "
+            "signalling, including PIK3CA, KRAS, NRAS, and BRAF. "
+            "TSC2 mutations underlie tuberous sclerosis complex-associated LAM. "
+            "Genetic testing of lesional tissue (somatic mutation panel) can guide targeted therapy "
+            "selection. For example, PIK3CA mutations may respond to alpelisib (a PI3K inhibitor), "
+            "while RAS pathway mutations may benefit from MEK inhibitors. "
+            "Germline testing is recommended for LAM patients given the association with TSC."
+        ),
+    },
+]
+
+EVAL_QUESTIONS = [
+    {
+        "question": "What is Kaposiform Lymphangiomatosis and how is it treated?",
+        "reference_answer": (
+            "Kaposiform Lymphangiomatosis (KLA) is a rare, aggressive lymphatic anomaly "
+            "with spindled cell proliferation. It is treated primarily with sirolimus (mTOR inhibitor), "
+            "sometimes combined with vinblastine in refractory cases."
+        ),
+        "gold_route": "rag",
+    },
+    {
+        "question": "Are there any current clinical trials for complex lymphatic anomalies?",
+        "reference_answer": "Yes, NCT04114110 evaluates sirolimus in CLA patients.",
+        "gold_route": "rag",
+    },
+    {
+        "question": "What support groups exist for rare lymphatic disease patients?",
+        "reference_answer": "NORD, LE&RN, CLA Support Group, GARD, Orphanet.",
+        "gold_route": "rag",
+    },
+    {
+        "question": "How does sirolimus work for lymphatic anomalies?",
+        "reference_answer": "Sirolimus inhibits mTOR, slowing abnormal lymphatic growth.",
+        "gold_route": "rag",
+    },
+    {
+        "question": "What is the latest research on PIK3CA mutations in lymphatic malformations?",
+        "reference_answer": "PIK3CA is a somatic driver mutation; alpelisib is a potential targeted therapy.",
+        "gold_route": "web",
+    },
+    {
+        "question": "What are the symptoms of Gorham-Stout disease?",
+        "reference_answer": "Progressive osteolysis, bone pain, fractures, chylothorax if thoracic.",
+        "gold_route": "rag",
+    },
+    {
+        "question": "Is LAM hereditary?",
+        "reference_answer": "LAM is associated with TSC2 germline mutations (TSC-LAM) or sporadic somatic mutations.",
+        "gold_route": "rag",
+    },
+    {
+        "question": "What imaging is used to diagnose CCLA?",
+        "reference_answer": "Dynamic contrast-enhanced MR lymphangiography (DCMRL).",
+        "gold_route": "rag",
+    },
+]
+
+
+def main() -> None:
+    out_dir = Path(__file__).parent
+    docs_path = out_dir / "rare_disease_docs.json"
+    eval_path = out_dir / "eval_questions.json"
+
+    with docs_path.open("w", encoding="utf-8") as f:
+        json.dump(RARE_DISEASE_DOCUMENTS, f, indent=2, ensure_ascii=False)
+    print(f"✓ Wrote {len(RARE_DISEASE_DOCUMENTS)} documents → {docs_path}")
+
+    with eval_path.open("w", encoding="utf-8") as f:
+        json.dump(EVAL_QUESTIONS, f, indent=2, ensure_ascii=False)
+    print(f"✓ Wrote {len(EVAL_QUESTIONS)} eval questions → {eval_path}")
+
+
+if __name__ == "__main__":
+    main()

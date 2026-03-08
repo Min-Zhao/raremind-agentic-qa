@@ -1,0 +1,42 @@
+[
+  {
+    "question": "What is Kaposiform Lymphangiomatosis and how is it treated?",
+    "reference_answer": "Kaposiform Lymphangiomatosis (KLA) is a rare, aggressive lymphatic anomaly with spindled cell proliferation. It is treated primarily with sirolimus (mTOR inhibitor), sometimes combined with vinblastine in refractory cases.",
+    "gold_route": "rag"
+  },
+  {
+    "question": "Are there any current clinical trials for complex lymphatic anomalies?",
+    "reference_answer": "Yes, NCT04114110 evaluates sirolimus in CLA patients.",
+    "gold_route": "rag"
+  },
+  {
+    "question": "What support groups exist for rare lymphatic disease patients?",
+    "reference_answer": "NORD, LE&RN, CLA Support Group, GARD, Orphanet.",
+    "gold_route": "rag"
+  },
+  {
+    "question": "How does sirolimus work for lymphatic anomalies?",
+    "reference_answer": "Sirolimus inhibits mTOR, slowing abnormal lymphatic growth.",
+    "gold_route": "rag"
+  },
+  {
+    "question": "What is the latest research on PIK3CA mutations in lymphatic malformations?",
+    "reference_answer": "PIK3CA is a somatic driver mutation; alpelisib is a potential targeted therapy.",
+    "gold_route": "web"
+  },
+  {
+    "question": "What are the symptoms of Gorham-Stout disease?",
+    "reference_answer": "Progressive osteolysis, bone pain, fractures, chylothorax if thoracic.",
+    "gold_route": "rag"
+  },
+  {
+    "question": "Is LAM hereditary?",
+    "reference_answer": "LAM is associated with TSC2 germline mutations (TSC-LAM) or sporadic somatic mutations.",
+    "gold_route": "rag"
+  },
+  {
+    "question": "What imaging is used to diagnose CCLA?",
+    "reference_answer": "Dynamic contrast-enhanced MR lymphangiography (DCMRL).",
+    "gold_route": "rag"
+  }
+]
