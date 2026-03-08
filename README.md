@@ -12,9 +12,8 @@ citation-backed final answer.
 
 ## Architecture
 
-```
 ![System Overview](figures/system_overview.png)
-```
+
 
 ### Routing Decision Tree
 
